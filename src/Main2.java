@@ -1,10 +1,11 @@
 import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Main {
-
+public class Main2 {
     /**
      * 1000万のIDに対して、ランダムに1000万回数値を加算する
-     * 配列版 4000ms
+     * HashMap版 35000ms
      * @param args
      */
     public static void main(String[] args) {
@@ -14,17 +15,18 @@ public class Main {
         int idNum = 10_000_000;
         max = 10_000_000;
         long startTime = System.currentTimeMillis();
-        int[] count = new int[idNum];
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
         for (int i = 0; i < max; i++) {
             int id = sc.nextInt(idNum);
-            count[id] += 1000;
+            int sum = map.getOrDefault(id,0);
+            map.put(id,sum + 1000);
         }
         long endTime = System.currentTimeMillis();
         System.out.println("total:" + (endTime - startTime) + "ms");
         //System.out.println(sc.nextInt(Integer.MAX_VALUE));
 
         for (int i = 0; i < 50; i++) {
-            System.out.println(count[i]);
+            System.out.println(map.getOrDefault(i,0));
         }
     }
 }
